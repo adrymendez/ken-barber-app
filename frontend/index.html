@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEN-BARBERAPP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><img src="img/logotitle3.png" alt="" style="width:px;height:150px;vertical-align:middle;margin-right:40px;"></h1>
+            </div>
+            <nav class="nav">
+                <a href="#inicio" class="nav-link">Inicio</a>
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="#" id="linkUbicacion" class="nav-link">Ubicación</a>
+                <a href="#paciente" class="nav-link">Cliente</a>
+                <a href="#admin" class="nav-link">Admin</a>
+                <button class="nav-cta" id="navCita">Agenda Cita</button>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h2 class="hero-title">Tu Estilo, Nuestra Pasión</h2>
+            <p class="hero-subtitle">Barbería premium con ambiente exclusivo, barberos expertos y servicios de grooming masculino de alto nivel. Vive la experiencia de un corte impecable y un cuidado personal superior.</p>
+            <button class="cta-button" id="ctaButton">Agenda Tu Cita Ahora</button>
+        </div>
+        <div class="hero-image">
+            <div class="image-placeholder">
+                <img src="img/Logoflotante3.png" alt="Icono Barbería" style="width:600px;height:auto;position:absolute;top:-79px;left:75%;transform:translateX(-60%);z-index:1;">
+            </div>
+        </div>
+    </section>
+
+    <section class="servicios" id="servicios">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon"><img src="img/cortedecabello.png" alt="Corte de Cabello" style="width:160px;height:160px;"></div>
+                    <h3>Corte de Cabello</h3>
+                    <p>Cortes modernos y clásicos, degradados, estilos personalizados y asesoría de imagen masculina.</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon"><img src="img/arreglodebarba.png" alt="Arreglo de Barba" style="width:160px;height:185px;"></div>
+                    <h3>Arreglo de Barba</h3>
+                    <p>Diseño, perfilado y arreglo profesional de barba con productos premium y técnicas de precisión.</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon"><img src="img/afeitadoclasico.png" alt="Afeitado Clásico" style="width:150px;height:190px;"></div>
+                    <h3>Afeitado Clásico</h3>
+                    <p>Afeitado tradicional con navaja, toalla caliente y ritual de relajación para una experiencia única.</p>
+                </div>
+                <div class="servicio-card">
+                    <div class="servicio-icon"><img src="img/tratamientocapilar.png" alt="Tratamiento Capilar" style="width:180px;height:170px;"></div>
+                    <h3>Tratamiento Capilar</h3>
+                    <p>Tratamientos para fortalecer, hidratar y revitalizar tu cabello. Cuidado y salud para tu estilo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="nosotros" id="nosotros">
+        <div class="container">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <div class="nosotros-content">
+                <div class="nosotros-text">
+                    <p>En <strong>KEN-BARBE</KEN-BARBE></strong>, llevamos más de 15 años ofreciendo servicios de barbería y grooming de alta calidad en un ambiente exclusivo.</p>
+                    <p>Nuestro equipo está formado por barberos expertos, apasionados por el estilo masculino y la atención personalizada.</p>
+                    <p>Utilizamos productos premium y técnicas modernas para que cada cliente viva una experiencia única y salga con su mejor versión.</p>
+                </div>
+                <div class="nosotros-stats">
+                    <div class="stat"><h4>+5000</h4><p>Clientes Satisfechos</p></div>
+                    <div class="stat"><h4>+15</h4><p>Años de Experiencia</p></div>
+                    <div class="stat"><h4>100%</h4><p>Satisfacción</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+        <div class="container">
+            <h2 class="section-title">Reserva Tu Cita</h2>
+            <div class="formulario-container">
+                <form id="formularioCita" class="formulario">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                        <span class="error-message" id="errorNombre"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required placeholder="Tu teléfono">
+                        <span class="error-message" id="errorTelefono"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                        <span class="error-message" id="errorEmail"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="servicio">Servicio</label>
+                        <select id="servicio" name="servicio" required>
+                            <option value="">Selecciona un servicio</option>
+                            <option value="Corte de Cabello">Corte de Cabello</option>
+                            <option value="Arreglo de Barba">Arreglo de Barba</option>
+                            <option value="Afeitado Clásico">Afeitado Clásico</option>
+                            <option value="Tratamiento Capilar">Tratamiento Capilar</option>
+                        </select>
+                        <span class="error-message" id="errorServicio"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="barbero">Barbero</label>
+                        <select id="barbero" name="barbero" required>
+                            <option value="">Selecciona un barbero</option>
+                        </select>
+                        <span class="error-message" id="errorBarbero"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                            <span class="error-message" id="errorFecha"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora">Hora</label>
+                            <input type="time" id="hora" name="hora" required>
+                            <span class="error-message" id="errorHora"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-button">Confirmar Cita</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="paciente" id="paciente">
+        <div class="container">
+            <h2 class="section-title">Área del Cliente</h2>
+            <p class="hero-subtitle">Consulta tus citas ingresando tu correo o teléfono.</p>
+            <div class="formulario-container">
+                <form id="formBuscarPaciente" class="formulario">
+                    <div class="form-group">
+                        <label for="buscarEmail">Correo Electrónico o Teléfono</label>
+                        <input type="text" id="buscarEmail" placeholder="Ingresa tu correo o teléfono">
+                    </div>
+                    <button type="submit" class="submit-button">Buscar Citas</button>
+                </form>
+                <div id="resultadosPaciente" class="formulario" style="margin-top:20px; display:none;">
+                    <h3>Mis Citas</h3>
+                    <div id="listaCitasPaciente"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modalExito">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>¡Cita Agendada!</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body"><p id="mensajeConfirmacion"></p></div>
+            <div class="modal-footer"><button class="modal-button" id="closeModalBtn">Cerrar</button></div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalAdminLogin">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login Administrador</h3>
+                <button class="modal-close" id="closeAdminModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formAdminLogin" class="form-inline">
+                    <div style="width:100%">
+                        <label for="adminPass" style="color:var(--accent-green);font-weight:600;">Contraseña</label>
+                        <input type="password" id="adminPass" placeholder="Ingresa la contraseña" style="width:100%;padding:10px;margin-top:8px;border-radius:6px;border:1px solid rgba(26,188,156,0.2);background:rgba(0,0,0,0.3);color:var(--text-light);">
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:10px;justify-content:flex-end;width:100%">
+                        <button type="submit" class="modal-button">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="confirmModalTitle">Confirmar acción</h3>
+                <button class="modal-close" id="closeConfirmModal">&times;</button>
+            </div>
+            <div class="modal-body"><p id="confirmModalMessage"></p></div>
+            <div class="modal-footer" style="gap:10px;">
+                <button class="modal-button" id="confirmModalCancel">Cancelar</button>
+                <button class="modal-button" id="confirmModalAccept">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="admin hidden" id="admin">
+        <div class="container">
+            <h2 class="section-title">Panel Administrador - Citas Agendadas</h2>
+
+            <div class="admin-controls">
+                <div class="filter-group">
+                    <label for="filterBarbero">Filtrar por barbero</label>
+                    <select id="filterBarbero"><option value="">Todos los barberos</option></select>
+                </div>
+                <div class="admin-actions">
+                    <button id="exportCsv" class="modal-button">Exportar CSV</button>
+                    <button id="clearAll" class="modal-button">Eliminar todas</button>
+                    <button id="adminLogout" class="modal-button">Cerrar sesión</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table" id="tablaCitas">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th><th>Teléfono</th><th>Correo</th><th>Servicio</th>
+                            <th>Barbero</th><th>Fecha</th><th>Hora</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="formulario-container" style="margin-top:24px;">
+                <form id="formEditarCita" class="formulario">
+                    <h3 style="margin-bottom:12px;">Editar cita seleccionada</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label for="editNombre">Nombre</label><input type="text" id="editNombre" required></div>
+                        <div class="form-group"><label for="editTelefono">Teléfono</label><input type="text" id="editTelefono" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="editFecha">Fecha</label><input type="date" id="editFecha" required></div>
+                        <div class="form-group"><label for="editHora">Hora</label><input type="time" id="editHora" required></div>
+                    </div>
+                    <div style="display:flex; gap:10px; justify-content:flex-end;">
+                        <button type="button" class="modal-button" id="btnCancelarEdicion" style="display:none;">Cancelar edición</button>
+                        <button type="submit" class="modal-button" id="btnGuardarCitaAdmin">Guardar cita</button>
+                    </div>
+                </form>
+            </div>
+
+            <h3 class="section-title" style="margin-top:40px;">Gestionar Barberos</h3>
+            <div class="doctors-manage">
+                <form id="formAddDoctor" class="form-inline">
+                    <input type="text" id="newDoctor" placeholder="Nombre del barbero" required>
+                    <input type="text" id="newDoctorEspecialidad" placeholder="Especialidad">
+                    <button type="submit" class="modal-button">Añadir Barbero</button>
+                </form>
+                <ul id="listaMedicos" class="doctor-list"></ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <h4>KEN-BARBER</h4>
+                <p><i class="fa-solid fa-location-dot"></i>C. Fello A. Kidd, San Pedro de Macorís 21000, República Dominicana</p>
+                <p><i class="fa-solid fa-phone"></i> (809) 897-1466</p>
+                <p><i class="fa-solid fa-envelope"></i></p>
+            </div>
+            <div>
+                <h4>Redes Sociales</h4>
+                <div class="social-links">
+                    <a href="https://wa.me/8098971466" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/kenbarber20?igsh=MXB0ajAwazJ5b2hoYQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1CKmZBvowg/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 KEN-BARBER. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
