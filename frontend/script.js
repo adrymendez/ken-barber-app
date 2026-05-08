@@ -1,5 +1,5 @@
 /* ======================= DATOS INICIALES Y ELEMENTOS DEL DOM ======================= */
-const API_URL = "https://clinica-dental-gyyo.onrender.com/api";
+const API_URL = "https://ken-barber-app.onrender.com/api";
 const horariosOcupados = {
     '2026-02-18': ['09:00', '14:00', '16:00'],
     '2026-02-19': ['10:00', '15:00'],
