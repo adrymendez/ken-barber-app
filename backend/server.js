@@ -2,24 +2,260 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const pool = require('./config/db');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+/* =========================
+   TEST
+========================= */
+
 app.get('/', (req, res) => {
-    res.send('Servidor funcionando');
+    res.send('KEN BARBER API funcionando');
 });
 
-app.get('/api/test', (req, res) => {
-    res.json({
-        ok: true,
-        message: 'API funcionando'
-    });
+app.get('/api/test', async (req, res) => {
+    try {
+
+        const result = await pool.query('SELECT NOW()');
+
+        res.json({
+            ok: true,
+            message: 'Base de datos conectada',
+            time: result.rows[0]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
 });
 
-const PORT = 3000;
+/* =========================
+   OBTENER BARBEROS
+========================= */
+
+app.get('/api/medicos', async (req, res) => {
+
+    try {
+
+        const result = await pool.query(`
+            SELECT * FROM medicos
+            ORDER BY id DESC
+        `);
+
+        res.json({
+            ok: true,
+            data: result.rows
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   CREAR BARBERO
+========================= */
+
+app.post('/api/medicos', async (req, res) => {
+
+    try {
+
+        const { nombre, especialidad } = req.body;
+
+        const result = await pool.query(`
+            INSERT INTO medicos(nombre, especialidad)
+            VALUES($1,$2)
+            RETURNING *
+        `, [nombre, especialidad]);
+
+        res.json({
+            ok: true,
+            data: result.rows[0]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   OBTENER CITAS
+========================= */
+
+app.get('/api/citas', async (req, res) => {
+
+    try {
+
+        const result = await pool.query(`
+            SELECT * FROM citas
+            ORDER BY fecha ASC, hora ASC
+        `);
+
+        res.json({
+            ok: true,
+            data: result.rows
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   CREAR CITA
+========================= */
+
+app.post('/api/citas', async (req, res) => {
+
+    try {
+
+        const {
+            nombre,
+            telefono,
+            email,
+            servicio,
+            medico,
+            fecha,
+            hora
+        } = req.body;
+
+        const result = await pool.query(`
+            INSERT INTO citas(
+                nombre,
+                telefono,
+                email,
+                servicio,
+                medico,
+                fecha,
+                hora
+            )
+            VALUES($1,$2,$3,$4,$5,$6,$7)
+            RETURNING *
+        `, [
+            nombre,
+            telefono,
+            email,
+            servicio,
+            medico,
+            fecha,
+            hora
+        ]);
+
+        res.json({
+            ok: true,
+            data: result.rows[0]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   ELIMINAR CITA
+========================= */
+
+app.delete('/api/citas/:id', async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        await pool.query(`
+            DELETE FROM citas
+            WHERE id = $1
+        `, [id]);
+
+        res.json({
+            ok: true
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   EDITAR CITA
+========================= */
+
+app.put('/api/citas/:id', async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const {
+            nombre,
+            telefono,
+            fecha,
+            hora
+        } = req.body;
+
+        const result = await pool.query(`
+            UPDATE citas
+            SET
+                nombre = $1,
+                telefono = $2,
+                fecha = $3,
+                hora = $4
+            WHERE id = $5
+            RETURNING *
+        `, [
+            nombre,
+            telefono,
+            fecha,
+            hora,
+            id
+        ]);
+
+        res.json({
+            ok: true,
+            data: result.rows[0]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   SERVER
+========================= */
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`);
