@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const XLSX = require('xlsx');
 const express = require('express');
 const cors = require('cors');
 const pool = require('./config/db');
@@ -342,7 +342,7 @@ app.put('/api/citas/:id', async (req, res) => {
     }
 });
 /* =========================
-   EXPORTAR REPORTE CSV
+   EXPORTAR REPORTE EXCEL
 ========================= */
 
 app.get('/api/reporte', async (req, res) => {
@@ -355,27 +355,43 @@ app.get('/api/reporte', async (req, res) => {
             ORDER BY fecha ASC, hora ASC
         `);
 
-        const citas = result.rows;
+        const citas = result.rows.map(cita => ({
+            ID: cita.id,
+            Nombre: cita.nombre,
+            Telefono: cita.telefono,
+            Email: cita.email || '',
+            Servicio: cita.servicio,
+            Barbero: cita.medico,
+            Fecha: cita.fecha,
+            Hora: cita.hora
+        }));
 
-        let csv =
-            'ID,Nombre,Telefono,Email,Servicio,Barbero,Fecha,Hora\\n';
+        const worksheet = XLSX.utils.json_to_sheet(citas);
 
-        citas.forEach(cita => {
+        const workbook = XLSX.utils.book_new();
 
-            csv += `${cita.id},"${cita.nombre}","${cita.telefono}","${cita.email || ''}","${cita.servicio}","${cita.medico}","${cita.fecha}","${cita.hora}"\\n`;
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            'Citas'
+        );
+
+        const buffer = XLSX.write(workbook, {
+            type: 'buffer',
+            bookType: 'xlsx'
         });
 
         res.setHeader(
             'Content-Type',
-            'text/csv'
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
 
         res.setHeader(
             'Content-Disposition',
-            'attachment; filename=\"reporte-citas.csv\"'
+            'attachment; filename=\"reporte-citas.xlsx\"'
         );
 
-        res.send(csv);
+        res.send(buffer);
 
     } catch (error) {
 
