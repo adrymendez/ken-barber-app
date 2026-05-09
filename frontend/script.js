@@ -55,6 +55,80 @@ const closeConfirmModal = document.getElementById('closeConfirmModal');
 let barberos = [];
 let citas = [];
 let citaEditandoId = null;
+function renderMedicos() {
+    if (!listaMedicos) return;
+    listaMedicos.innerHTML = '';
+    barberos.forEach(barbero => {
+        const div = document.createElement('div');
+        div.className = 'medico-item';
+        div.innerHTML = `
+            <div>
+                <strong>${barbero.nombre}</strong>
+                <p>${barbero.especialidad || ''}</p>
+            </div>
+            <div class="medico-actions">
+                <button onclick="editarBarbero(${barbero.id})">
+                    Editar
+                </button>
+                <button onclick="eliminarBarbero(${barbero.id})">
+                    Eliminar
+                </button>
+            </div>
+        `;
+
+        listaMedicos.appendChild(div);
+    });
+}
+async function editarBarbero(id) {
+    const barbero = barberos.find(b => b.id == id);
+    if (!barbero) return;
+    const nombre = prompt('Nuevo nombre:', barbero.nombre);
+    if (!nombre) return;
+    const especialidad = prompt(
+        'Especialidad:',
+        barbero.especialidad || ''
+    );
+
+    try {
+
+        await apiRequest(`/medicos/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre,
+                especialidad
+            })
+        });
+
+        showToast('Barbero actualizado');
+        cargarBarberos();
+
+    } catch (error) {
+        console.error(error);
+        showToast('Error actualizando', 'error');
+    }
+}
+
+async function eliminarBarbero(id) {
+
+    const confirmar = confirm(
+        '¿Eliminar este barbero?'
+    );
+
+    if (!confirmar) return;
+    try {
+        await apiRequest(`/medicos/${id}`, {
+            method: 'DELETE'
+        });
+        showToast('Barbero eliminado');
+        cargarBarberos();
+    } catch (error) {
+        console.error(error);
+        showToast('Error eliminando', 'error');
+    }
+}
 
 /* ======================= UX: TOAST + MODAL CONFIRMACIÓN ======================= */
 

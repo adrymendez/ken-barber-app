@@ -94,6 +94,72 @@ app.post('/api/medicos', async (req, res) => {
         });
     }
 });
+/* =========================
+   EDITAR BARBERO
+========================= */
+
+app.put('/api/medicos/:id', async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+        const { nombre, especialidad } = req.body;
+
+        const result = await pool.query(`
+            UPDATE medicos
+            SET
+                nombre = $1,
+                especialidad = $2
+            WHERE id = $3
+            RETURNING *
+        `, [
+            nombre,
+            especialidad,
+            id
+        ]);
+
+        res.json({
+            ok: true,
+            data: result.rows[0]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
+/* =========================
+   ELIMINAR BARBERO
+========================= */
+
+app.delete('/api/medicos/:id', async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        await pool.query(`
+            DELETE FROM medicos
+            WHERE id = $1
+        `, [id]);
+
+        res.json({
+            ok: true
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
+
 
 /* =========================
    OBTENER CITAS
