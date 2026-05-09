@@ -341,7 +341,52 @@ app.put('/api/citas/:id', async (req, res) => {
         });
     }
 });
+/* =========================
+   EXPORTAR REPORTE CSV
+========================= */
 
+app.get('/api/reporte', async (req, res) => {
+
+    try {
+
+        const result = await pool.query(`
+            SELECT *
+            FROM citas
+            ORDER BY fecha ASC, hora ASC
+        `);
+
+        const citas = result.rows;
+
+        let csv =
+            'ID,Nombre,Telefono,Email,Servicio,Barbero,Fecha,Hora\\n';
+
+        citas.forEach(cita => {
+
+            csv += `${cita.id},"${cita.nombre}","${cita.telefono}","${cita.email || ''}","${cita.servicio}","${cita.medico}","${cita.fecha}","${cita.hora}"\\n`;
+        });
+
+        res.setHeader(
+            'Content-Type',
+            'text/csv'
+        );
+
+        res.setHeader(
+            'Content-Disposition',
+            'attachment; filename=\"reporte-citas.csv\"'
+        );
+
+        res.send(csv);
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+});
 /* =========================
    SERVER
 ========================= */
