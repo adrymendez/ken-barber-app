@@ -1117,7 +1117,9 @@ if (clearAllBtn) {
     });
 }
 
-if (filterMedico) filterMedico.addEventListener('change', renderCitasTable);
+if (filterBarbero) {
+    filterBarbero.addEventListener('change', renderCitasTable);
+}
 
 if (formEditarCita) {
     formEditarCita.addEventListener('submit', async function(e) {
@@ -1206,8 +1208,8 @@ function showAdminSection() {
     if (!el) return;
     el.classList.remove('hidden');
     renderCitasTable();
-    renderDoctorSelects();
-    renderDoctorsList();
+    renderBarberoSelects();
+   renderBarberosList();
 }
 
 function hideAdminSection() {
