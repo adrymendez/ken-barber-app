@@ -1013,7 +1013,7 @@ async function actualizarCita(id) {
 
 function renderCitasTable() {
     if (!tablaCitasBody) return;
-    const filtro = filterMedico ? filterMedico.value : '';
+    const filtro = filterBarbero ? filterBarbero.value : '';
     tablaCitasBody.innerHTML = '';
     const lista = citas.slice().sort((a, b) => a.fecha.localeCompare(b.fecha) || a.hora.localeCompare(b.hora));
 
