@@ -259,24 +259,29 @@ function validarTelefono() {
 }
 
 function validarEmail() {
+
     const valor = inputEmail.value.trim();
+
     const grupo = inputEmail.closest('.form-group');
+
     const error = document.getElementById('errorEmail');
 
+    // Email opcional
     if (valor === '') {
-        grupo.classList.add('error');
-        error.textContent = 'El correo electrónico es obligatorio';
-        error.classList.add('show');
-        return false;
+        grupo.classList.remove('error');
+        error.textContent = '';
+        error.classList.remove('show');
+        return true;
     }
 
+    // Validar formato si escribió algo
     if (!esEmailValido(valor)) {
         grupo.classList.add('error');
-        error.textContent = 'Ingresa un correo electrónico válido';
+        error.textContent = 'Ingresa un correo válido';
         error.classList.add('show');
         return false;
     }
-
+    
     grupo.classList.remove('error');
     error.textContent = '';
     error.classList.remove('show');

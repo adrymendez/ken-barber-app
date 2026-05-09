@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/test', async (req, res) => {
+
     try {
 
         const result = await pool.query('SELECT NOW()');
@@ -154,19 +155,43 @@ app.post('/api/citas', async (req, res) => {
         `, [
             nombre,
             telefono,
-            email,
+            email || null,
             servicio,
             medico,
             fecha,
             hora
         ]);
 
+        // Limpiar teléfono
+        const telefonoLimpio = telefono.replace(/\D/g, '');
+
+        // Mensaje WhatsApp
+        const mensaje = encodeURIComponent(
+`Hola ${nombre}, tu cita en KEN BARBER fue confirmada.
+
+📅 Fecha: ${fecha}
+⏰ Hora: ${hora}
+💈 Servicio: ${servicio}
+👤 Barbero: ${medico}
+
+Gracias por reservar con nosotros.`
+        );
+
+        // Link WhatsApp
+        const waLink = `https://wa.me/${telefonoLimpio}?text=${mensaje}`;
+
         res.json({
             ok: true,
-            data: result.rows[0]
+            data: {
+                ...result.rows[0],
+                waMode: 'wa_me',
+                waLink
+            }
         });
 
     } catch (error) {
+
+        console.error(error);
 
         res.status(500).json({
             ok: false,
