@@ -1209,8 +1209,9 @@ function showAdminSection() {
     el.classList.remove('hidden');
     renderCitasTable();
     renderBarberoSelects();
-   renderBarberosList();
+    renderBarberosList();
 }
+
 
 function hideAdminSection() {
     const el = document.getElementById('admin');
