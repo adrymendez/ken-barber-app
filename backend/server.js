@@ -328,12 +328,36 @@ app.put('/api/citas/:id', async (req, res) => {
             id
         ]);
 
+        const citaActualizada = result.rows[0];
+
+        // Limpiar teléfono
+        const telefonoLimpio = telefono.replace(/\D/g, '');
+
+        // Mensaje WhatsApp
+        const mensaje = encodeURIComponent(
+`Hola ${nombre}, tu cita en KEN BARBER fue actualizada.
+
+📅 Nueva fecha: ${fecha}
+⏰ Nueva hora: ${hora}
+
+Gracias por reservar con nosotros.`
+        );
+
+        // Link WhatsApp
+        const waLink = `https://wa.me/${telefonoLimpio}?text=${mensaje}`;
+
         res.json({
             ok: true,
-            data: result.rows[0]
+            data: {
+                ...citaActualizada,
+                waMode: 'wa_me',
+                waLink
+            }
         });
 
     } catch (error) {
+
+        console.error(error);
 
         res.status(500).json({
             ok: false,
